@@ -1,0 +1,26 @@
+server:
+  port: 8090
+  address: 0.0.0.0
+  servlet:
+    encoding:
+      charset: UTF-8
+
+spring:
+  application:
+    name: MyUni
+  profiles:
+    active: dev
+  config:
+    import: secret.yml
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
