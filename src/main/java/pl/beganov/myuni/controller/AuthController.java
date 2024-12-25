@@ -6,7 +6,10 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.beganov.myuni.service.core.AuthService;
-import pl.beganov.myuni.service.usos.UsosScheduleService;
+import pl.beganov.myuni.service.core.LessonService;
+import pl.beganov.myuni.service.usos.UsosUpdateService;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -15,7 +18,8 @@ import pl.beganov.myuni.service.usos.UsosScheduleService;
 public class AuthController {
 
     AuthService authService;
-    UsosScheduleService usosScheduleService;
+    UsosUpdateService usosUpdateService;
+    LessonService lessonService;
 
     @PostMapping("/login")
     public String login() {
@@ -29,7 +33,9 @@ public class AuthController {
         return ResponseEntity.ok(authService.handleCallback(oauthToken, oauthVerifier));
     }
     @GetMapping("/schedule")
-    public ResponseEntity<?> getSchedule(@RequestParam Long userId) {
-        return ResponseEntity.ok(usosScheduleService.getScheduleByUserId(userId));
+    public ResponseEntity<?> getSchedule(@RequestParam Long userId,
+                                                    @RequestParam LocalDate startDate,
+                                                    @RequestParam(required = false) LocalDate endDate) {
+        return ResponseEntity.ok(lessonService.getLessonsByAppUser(userId, startDate, endDate));
     }
 }

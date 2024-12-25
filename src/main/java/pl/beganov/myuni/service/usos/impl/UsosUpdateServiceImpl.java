@@ -14,21 +14,24 @@ import pl.beganov.myuni.config.UsosSecretsConfig;
 import pl.beganov.myuni.constants.UsosEndpointConstants;
 import pl.beganov.myuni.entity.AppUser;
 import pl.beganov.myuni.service.core.AppUserService;
-import pl.beganov.myuni.service.usos.UsosScheduleService;
+import pl.beganov.myuni.service.core.LessonService;
+import pl.beganov.myuni.service.usos.UsosUpdateService;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UsosScheduleServiceImpl implements UsosScheduleService {
+public class UsosUpdateServiceImpl implements UsosUpdateService {
     OAuth10aService service;
     AppUserService appUserService;
+    LessonService lessonService;
 
-    public UsosScheduleServiceImpl(AppUserService appUserService, UsosSecretsConfig secrets) {
+    public UsosUpdateServiceImpl(AppUserService appUserService, UsosSecretsConfig secrets, LessonService lessonService) {
         this.appUserService = appUserService;
         service = new ServiceBuilder(secrets.getKey())
                 .apiSecret(secrets.getSecret())
                 .build(UsosApi.instance());
+        this.lessonService = lessonService;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class UsosScheduleServiceImpl implements UsosScheduleService {
             service.signRequest(accessToken, request);
             Response response = service.execute(request);
             if (response.isSuccessful()) {
-                System.out.println(response.getBody());
+                lessonService.save(response.getBody(), appUser);
             }
             return response.getBody();
         }catch (InterruptedException | ExecutionException | IOException e) {
