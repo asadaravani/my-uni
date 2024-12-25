@@ -2,7 +2,7 @@ package pl.beganov.myuni.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import pl.beganov.myuni.dto.UserResponse;
+import pl.beganov.myuni.dto.usos.UserResponse;
 import pl.beganov.myuni.entity.AppUser;
 
 @Mapper

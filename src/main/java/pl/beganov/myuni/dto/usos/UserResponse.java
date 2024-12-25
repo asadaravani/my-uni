@@ -1,5 +1,4 @@
-package pl.beganov.myuni.dto;
-
+package pl.beganov.myuni.dto.usos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

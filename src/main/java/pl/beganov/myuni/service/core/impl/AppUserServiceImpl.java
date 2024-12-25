@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import pl.beganov.myuni.dto.UserResponse;
+import pl.beganov.myuni.dto.usos.UserResponse;
 import pl.beganov.myuni.entity.AppUser;
 import pl.beganov.myuni.exception.UserNotFoundException;
 import pl.beganov.myuni.mapper.AppUserMapper;

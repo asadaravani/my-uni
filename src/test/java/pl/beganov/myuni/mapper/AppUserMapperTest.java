@@ -1,7 +1,7 @@
 package pl.beganov.myuni.mapper;
 
 import org.junit.jupiter.api.Test;
-import pl.beganov.myuni.dto.UserResponse;
+import pl.beganov.myuni.dto.usos.UserResponse;
 import pl.beganov.myuni.entity.AppUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

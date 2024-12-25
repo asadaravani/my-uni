@@ -1,6 +1,6 @@
 package pl.beganov.myuni.enums;
 
-public enum SessionType {
-    LAB,
+public enum ClassType {
+    CLASS,
     LECTURE
 }

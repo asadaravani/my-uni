@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import pl.beganov.myuni.enums.DeliveryMode;
-import pl.beganov.myuni.enums.SessionType;
+import pl.beganov.myuni.enums.ClassType;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,38 +16,45 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Lesson extends BaseEntity{
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @Column
+    String id;
 
-    @ManyToOne
-    @JoinColumn(name = "schedule_id")
-    Schedule schedule;
-
-    @Column(nullable = false)
-    String title;
-
-    @Column(nullable = false)
-    LocalDateTime startTime;
-
-    @Column(nullable = false)
-    LocalDateTime endTime;
-
-    @Column(nullable = false)
-    SessionType type;
-
-    @Column(nullable = false)
-    String professor;
-
-    @Column(nullable = false)
-    DeliveryMode deliveryMode;
-
-    @Column(nullable = false)
-    String location;
-
-    @Column(nullable = false)
-    Integer groupNumber;
+    @ManyToMany
+            @JoinTable(
+                    name = "lesson_app_users",
+                    joinColumns = @JoinColumn(name = "lesson_id"),
+                    inverseJoinColumns = @JoinColumn(name = "app_user_id")
+            )
+    List<AppUser> appUsers;
 
     @Column
-    LocalDateTime lastUpdatedAt;
+    String name;
+
+    @Column
+    LocalDateTime startTime;
+
+    @Column
+    LocalDateTime endTime;
+
+    @Column
+    ClassType classType;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "lesson_lecturer_ids", joinColumns = @JoinColumn(name = "lesson_id"))
+    @Column(name = "lecturer_id")
+    List<Long> lecturerIds;
+
+    @Column
+    String room;
+
+    @Column
+    Long groupNumber;
+
+    @Column
+    String url;
+
+    @Column
+    String groupProfileUrl;
 }
