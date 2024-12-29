@@ -1,6 +1,9 @@
 package pl.beganov.myuni.service.core;
 
 import pl.beganov.myuni.entity.AppUser;
+import pl.beganov.myuni.entity.Course;
+
+import java.util.List;
 
 public interface AppUserService {
 
@@ -9,4 +12,6 @@ public interface AppUserService {
     void saveAuthenticatedUser(String accessToken, String tokenSecret, String responseBody);
 
     AppUser findById(Long id);
+
+    void saveCourses(List<Course> courses, AppUser appUser);
 }

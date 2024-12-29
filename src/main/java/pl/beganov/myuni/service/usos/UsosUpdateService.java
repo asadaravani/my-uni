@@ -1,5 +1,6 @@
 package pl.beganov.myuni.service.usos;
 
 public interface UsosUpdateService {
-    String getScheduleByUserId(Long userId);
+
+    String updateCoursesByUserId(Long userId);
 }
