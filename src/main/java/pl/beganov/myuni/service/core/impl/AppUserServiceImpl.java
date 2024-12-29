@@ -8,10 +8,13 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import pl.beganov.myuni.dto.usos.UserResponse;
 import pl.beganov.myuni.entity.AppUser;
+import pl.beganov.myuni.entity.Course;
 import pl.beganov.myuni.exception.UserNotFoundException;
 import pl.beganov.myuni.mapper.AppUserMapper;
 import pl.beganov.myuni.repository.AppUserRepository;
 import pl.beganov.myuni.service.core.AppUserService;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,5 +42,10 @@ public class AppUserServiceImpl implements AppUserService {
     public AppUser findById(Long id) {
         return appUserRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: "+ id));
+    }
+    @Override
+    public void saveCourses(List<Course> courses, AppUser appUser) {
+        appUser.setCourses(courses);
+        appUserRepository.save(appUser);
     }
 }

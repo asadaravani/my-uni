@@ -1,6 +1,9 @@
 package pl.beganov.myuni.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -18,7 +21,6 @@ public class BaseEntity {
     @Column(updatable = false)
     LocalDateTime createdAt;
 
-    @Column
     LocalDateTime updatedAt;
 
     @PrePersist

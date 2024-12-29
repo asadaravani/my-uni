@@ -50,6 +50,7 @@ public class AuthServiceImpl implements AuthService {
             if (response.isSuccessful()) {
                 appUserService.saveAuthenticatedUser(accessToken.getToken(), accessToken.getTokenSecret(), response.getBody());
             }
+            System.out.println(response.getBody());
             return response.getBody();
         }catch (IOException | InterruptedException | ExecutionException e) {
             throw new LoginFailedException("Call Back failed:"+ e.getMessage());

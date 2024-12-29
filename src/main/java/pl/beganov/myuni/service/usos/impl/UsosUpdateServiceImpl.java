@@ -13,8 +13,9 @@ import pl.beganov.myuni.api.UsosApi;
 import pl.beganov.myuni.config.UsosSecretsConfig;
 import pl.beganov.myuni.constants.UsosEndpointConstants;
 import pl.beganov.myuni.entity.AppUser;
+import pl.beganov.myuni.exception.LoginFailedException;
 import pl.beganov.myuni.service.core.AppUserService;
-import pl.beganov.myuni.service.core.LessonService;
+import pl.beganov.myuni.service.core.CourseService;
 import pl.beganov.myuni.service.usos.UsosUpdateService;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -24,27 +25,30 @@ import java.util.concurrent.ExecutionException;
 public class UsosUpdateServiceImpl implements UsosUpdateService {
     OAuth10aService service;
     AppUserService appUserService;
-    LessonService lessonService;
+    CourseService courseService;
 
-    public UsosUpdateServiceImpl(AppUserService appUserService, UsosSecretsConfig secrets, LessonService lessonService) {
+    public UsosUpdateServiceImpl(AppUserService appUserService, UsosSecretsConfig secrets, CourseService courseService) {
         this.appUserService = appUserService;
         service = new ServiceBuilder(secrets.getKey())
                 .apiSecret(secrets.getSecret())
                 .build(UsosApi.instance());
-        this.lessonService = lessonService;
+        this.courseService = courseService;
     }
 
     @Override
-    public String getScheduleByUserId(Long userId) {
+    public String updateCoursesByUserId(Long userId) {
+        System.out.println("From parameter of method: " + userId);
         try{
             AppUser appUser = appUserService.findById(userId);
+            System.out.println("After finding the user: " + appUser.getId());
             OAuth1AccessToken accessToken = new OAuth1AccessToken(appUser.getAccessToken(), appUser.getTokenSecret());
-            OAuthRequest request = new OAuthRequest(Verb.GET, UsosEndpointConstants.TIME_TABLE);
+            OAuthRequest request = new OAuthRequest(Verb.GET, UsosEndpointConstants.USER_COURSES_URL);
             service.signRequest(accessToken, request);
             Response response = service.execute(request);
-            if (response.isSuccessful()) {
-                lessonService.save(response.getBody(), appUser);
+            if (!response.isSuccessful()) {
+                throw new LoginFailedException("Update failed");
             }
+            courseService.save(response.getBody(), appUser);
             return response.getBody();
         }catch (InterruptedException | ExecutionException | IOException e) {
             throw new RuntimeException(e);
