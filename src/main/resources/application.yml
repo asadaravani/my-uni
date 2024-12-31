@@ -14,7 +14,7 @@ spring:
     import: secret.yml
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: false
     open-in-view: false
     properties:

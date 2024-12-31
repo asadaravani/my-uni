@@ -2,6 +2,7 @@ package pl.beganov.myuni.entity;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,10 +28,8 @@ public class Course extends BaseEntity{
 
     String termId;
 
-    Long groupNumber;
-
     String url;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     Set<String> lecturers;
 }

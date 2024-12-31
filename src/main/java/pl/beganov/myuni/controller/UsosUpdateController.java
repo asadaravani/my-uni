@@ -11,15 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.beganov.myuni.service.usos.UsosUpdateService;
 
 @RestController
-@RequestMapping("/api/schedule")
+@RequestMapping("/api/update")
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CourseController {
+public class UsosUpdateController {
 
     UsosUpdateService usosUpdateService;
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updateSchedule(@RequestParam Long userId){
+    @PostMapping("/activities")
+    public ResponseEntity<?> updateActivities(@RequestParam Long userId) {
+        return ResponseEntity.ok(usosUpdateService.updateActivitiesByUserId(userId));
+    }
+
+    @PostMapping("/courses")
+    public ResponseEntity<?> updateCourses(@RequestParam Long userId) {
         return ResponseEntity.ok(usosUpdateService.updateCoursesByUserId(userId));
     }
 }

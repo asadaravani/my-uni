@@ -41,6 +41,7 @@ public class CourseServiceImpl implements CourseService {
         appUserService.saveCourses(validEntities, user);
     }
 
+    @Override
     public Course findById(String id) {
         return courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course not found"));
     }
