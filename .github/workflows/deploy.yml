@@ -23,7 +23,7 @@ jobs:
       - name: Deploy application
         run: |
           ssh root@206.81.23.110 << 'EOF' 
-          cd /path/to/your/app  #edit here
+          cd /root/my-uni
           git pull origin main
           ./deploy.sh
           EOF
