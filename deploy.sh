@@ -10,5 +10,5 @@ echo "Building the application..."
 ./mvnw clean install
 
 echo "Starting the application..."
-nohup java -jar target/my-uni-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+nohup java -jar target/MyUni-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
 echo "Application deployed successfully!"
