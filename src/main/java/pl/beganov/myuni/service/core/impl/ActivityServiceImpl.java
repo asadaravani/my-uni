@@ -13,7 +13,6 @@ import pl.beganov.myuni.mapper.ActivityMapper;
 import pl.beganov.myuni.repository.ActivityRepository;
 import pl.beganov.myuni.service.core.ActivityService;
 import pl.beganov.myuni.service.core.CourseService;
-
 import java.util.List;
 
 @Service
