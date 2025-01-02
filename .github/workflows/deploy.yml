@@ -1,0 +1,29 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 206.81.23.110 >> ~/.ssh/known_hosts
+
+      - name: Deploy application
+        run: |
+          ssh root@206.81.23.110 << 'EOF' 
+          cd /path/to/your/app  #edit here
+          git pull origin main
+          ./deploy.sh
+          EOF
