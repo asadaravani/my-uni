@@ -9,7 +9,7 @@ spring:
   application:
     name: MyUni
   profiles:
-    active: prod
+    active: dev
   config:
     import: secret.yml
   jpa:

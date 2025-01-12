@@ -25,7 +25,7 @@ public interface ActivityMapper {
     @Mapping(source = "dto.classtypeName", target = "classType", qualifiedByName = "extractClassType")
     @Mapping(source = "course", target = "course")
     @Mapping(target = "lecturers", expression = "java(mapLecturers(dto.lecturerIds(), course))")
-    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "dto.id", target = "id")
     Activity dtoToEntity(ActivityUsosDto dto, Course course);
 
     @Named("extractDateFromString")

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 public record ActivityUsosDto(
+        @JsonProperty("type") String type,
+        @JsonProperty("sm_id") Long id,
         @JsonProperty("course_id") String courseId,
         @JsonProperty("start_time") String startTime,
         @JsonProperty("end_time") String endTime,

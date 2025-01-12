@@ -18,7 +18,6 @@ import java.util.Set;
 public class Activity extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @ManyToOne
@@ -37,4 +36,6 @@ public class Activity extends BaseEntity {
 
     @ElementCollection
     Set<String> lecturers;
+
+    String type;
 }

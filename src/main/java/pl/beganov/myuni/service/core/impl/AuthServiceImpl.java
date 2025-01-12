@@ -4,6 +4,7 @@ import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import lombok.AccessLevel;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import pl.beganov.myuni.api.UsosApi;
@@ -40,20 +41,17 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @SneakyThrows
     @Override
     public String handleCallback(String oauthToken, String oauthVerifier) {
-        try {
-            OAuth1AccessToken accessToken = service.getAccessToken(requestToken, oauthVerifier);
-            OAuthRequest request = new OAuthRequest(Verb.GET, UsosEndpointConstants.USER_INFO_URL);
-            service.signRequest(accessToken, request);
-            Response response = service.execute(request);
-            if (response.isSuccessful()) {
-                appUserService.saveAuthenticatedUser(accessToken.getToken(), accessToken.getTokenSecret(), response.getBody());
-            }
-            System.out.println(response.getBody());
-            return response.getBody();
-        }catch (IOException | InterruptedException | ExecutionException e) {
-            throw new LoginFailedException("Call Back failed:"+ e.getMessage());
+        OAuth1AccessToken accessToken = service.getAccessToken(requestToken, oauthVerifier);
+        OAuthRequest request = new OAuthRequest(Verb.GET, UsosEndpointConstants.USER_INFO_URL);
+        service.signRequest(accessToken, request);
+        Response response = service.execute(request);
+        if (response.isSuccessful()) {
+            appUserService.saveAuthenticatedUser(accessToken.getToken(), accessToken.getTokenSecret(), response.getBody());
         }
+        System.out.println(response.getBody());
+        return response.getBody();
     }
 }
